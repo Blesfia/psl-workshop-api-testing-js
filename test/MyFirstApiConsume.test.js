@@ -2,16 +2,13 @@ const agent = require('superagent-promise')(require('superagent'), Promise);
 const statusCode = require('http-status-codes');
 const chai = require('chai');
 
-const expect = chai.expect;
+const { expect } = chai;
 
 describe('First Api Tests', () => {
-
-  it('Consume GET Service', () => {
-    return agent.get('https://httpbin.org/ip').then((response) => {
-      expect(response.status).to.equal(statusCode.OK);
-      expect(response.body).to.have.property('origin');
-    });
-  });
+  it('Consume GET Service', () => agent.get('https://httpbin.org/ip').then((response) => {
+    expect(response.status).to.equal(statusCode.OK);
+    expect(response.body).to.have.property('origin');
+  }));
 
 
   it('Consume GET Service with query parameters', () => {
@@ -35,7 +32,7 @@ describe('First Api Tests', () => {
       age: 31,
       city: 'New York'
     };
- 
+
     return agent
       .post('https://httpbin.org/post')
       .send(body)
@@ -51,7 +48,7 @@ describe('First Api Tests', () => {
       age: 31,
       city: 'New York'
     };
- 
+
     return agent
       .put('https://httpbin.org/put')
       .send(body)
@@ -67,7 +64,7 @@ describe('First Api Tests', () => {
       age: 31,
       city: 'New York'
     };
- 
+
     return agent
       .patch('https://httpbin.org/patch')
       .send(body)
@@ -83,7 +80,7 @@ describe('First Api Tests', () => {
       age: 31,
       city: 'New York'
     };
- 
+
     return agent
       .del('https://httpbin.org/delete')
       .send(body)
@@ -92,6 +89,4 @@ describe('First Api Tests', () => {
         expect(response.body.json).to.eql(body);
       });
   });
- 
 });
-
