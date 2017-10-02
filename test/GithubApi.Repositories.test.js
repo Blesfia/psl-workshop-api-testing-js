@@ -30,14 +30,11 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
 
   describe('When someone request for the user aperdomob repos', () => {
     let response = [];
-    before('And the data is collected', (done) => {
-      agent.get('https://api.github.com/users/aperdomob/repos')
-        .auth('token', process.env.ACCESS_TOKEN)
-        .then((responseGitHub) => {
-          response = responseGitHub.body;
-          done();
-        });
-    });
+    before('And the data is collected', () => agent.get('https://api.github.com/users/aperdomob/repos')
+      .auth('token', process.env.ACCESS_TOKEN)
+      .then((responseGitHub) => {
+        response = responseGitHub.body;
+      }));
     describe('And the repo jasmine-awesome-report is needed', () => {
       let repo = null;
       before('And the repo is collected', () => {
@@ -57,11 +54,10 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
       });
 
       describe('And the repo jasmine-awesome-report is downloaded', () => {
-        before('', (done) => {
+        before('', () => {
           const file = fs.createWriteStream('repo.zip');
-          https.get(`${repo.html_url}/archive/master.zip`, (responseZip) => {
+          return https.get(`${repo.html_url}/archive/master.zip`, (responseZip) => {
             responseZip.pipe(file);
-            done();
           });
         });
         it('Then the file must be download correctly', () => {
