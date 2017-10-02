@@ -30,11 +30,12 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
 
   describe('When someone request for the user aperdomob repos', () => {
     let response = [];
-    before('And the data is collected', () => agent.get('https://api.github.com/users/aperdomob/repos')
-      .auth('token', process.env.ACCESS_TOKEN)
-      .then((responseGitHub) => {
-        response = responseGitHub.body;
-      }));
+    before('And the data is collected', () =>
+      agent.get('https://api.github.com/users/aperdomob/repos')
+        .auth('token', process.env.ACCESS_TOKEN)
+        .then((responseGitHub) => {
+          response = responseGitHub.body;
+        }));
     describe('And the repo jasmine-awesome-report is needed', () => {
       let repo = null;
       before('And the repo is collected', () => {
