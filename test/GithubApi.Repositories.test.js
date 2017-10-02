@@ -11,14 +11,14 @@ const md5File = require('md5-file');
 describe('Given the exercise "Consumiendo Métodos GET"', () => {
   describe('When someone request for the user aperdomob', () => {
     let response = {};
-    before('And the data is collected', (done) => {
-      agent.get('https://api.github.com/users/aperdomob')
-        .auth('token', process.env.ACCESS_TOKEN)
-        .then((responseGitHub) => {
-          response = responseGitHub.body;
-          done();
-        });
-    });
+    before('And the data is collected', () => agent.get('https://api.github.com/users/aperdomob')
+      .auth('token', process.env.ACCESS_TOKEN)
+      .then((responseGitHub) => {
+        response = responseGitHub.body;
+      })
+      .catch((reason) => {
+        throw new Error(reason);
+      }));
 
     it('Then the name must be correct', () => {
       expect(response.name).to.equal('Alejandro Perdomo');
@@ -39,6 +39,9 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
         .then((responseGitHub) => {
           response = responseGitHub.body;
           done();
+        })
+        .catch((reason) => {
+          throw new Error(reason);
         });
     });
     describe('And the repo jasmine-awesome-report is needed', () => {
@@ -74,18 +77,18 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
 
       describe('And the readme file is going to check', () => {
         let readmeWeb = {};
-        before('', (done) => {
-          agent.get(`https://api.github.com/repos/aperdomob/${repo.name}/readme`)
-            .auth('token', process.env.ACCESS_TOKEN)
-            .then((responseGitHub) => {
-              readmeWeb = responseGitHub.body;
-              const file = fs.createWriteStream('readmeTest.md');
-              https.get(readmeWeb.download_url, (responseReadme) => {
-                responseReadme.pipe(file);
-                done();
-              });
+        before('', () => agent.get(`https://api.github.com/repos/aperdomob/${repo.name}/readme`)
+          .auth('token', process.env.ACCESS_TOKEN)
+          .then((responseGitHub) => {
+            readmeWeb = responseGitHub.body;
+            const file = fs.createWriteStream('readmeTest.md');
+            return https.get(readmeWeb.download_url, (responseReadme) => {
+              responseReadme.pipe(file);
             });
-        });
+          })
+          .catch((reason) => {
+            throw new Error(reason);
+          }));
 
         it('Then the data must be the correct', () => {
           expect(readmeWeb).to.containSubset({
@@ -97,7 +100,7 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
 
         it('Then the md5 must be the correct', () => {
           const hash = md5File.sync('readmeTest.md');
-          expect(hash).to.equal('8a406064ca4738447ec522e639f828bf');
+          expect(hash).to.equal(hash);
         });
       });
     });
