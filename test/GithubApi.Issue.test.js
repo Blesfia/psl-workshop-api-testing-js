@@ -17,6 +17,7 @@ describe('Given a POST PATCH tests', () => {
       .auth('token', process.env.ACCESS_TOKEN).then((response) => {
         expect(response.body.find(element => element.name === repoToEdit)).to.exist;
       }));
+
     describe('And the issue will be create', () => {
       let issue;
       it('Then the issue is created', () => agent.post(`https://api.github.com/repos/${user.login}/${repoToEdit}/issues`, { title: 'Test Issue' })
