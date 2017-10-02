@@ -13,6 +13,7 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
     let response = {};
     before('And the data is collected', (done) => {
       agent.get('https://api.github.com/users/aperdomob')
+        .auth('token', process.env.ACCESS_TOKEN)
         .then((responseGitHub) => {
           response = responseGitHub.body;
           done();
@@ -34,6 +35,7 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
     let response = [];
     before('And the data is collected', (done) => {
       agent.get('https://api.github.com/users/aperdomob/repos')
+        .auth('token', process.env.ACCESS_TOKEN)
         .then((responseGitHub) => {
           response = responseGitHub.body;
           done();
@@ -74,6 +76,7 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
         let readmeWeb = {};
         before('', (done) => {
           agent.get(`https://api.github.com/repos/aperdomob/${repo.name}/readme`)
+            .auth('token', process.env.ACCESS_TOKEN)
             .then((responseGitHub) => {
               readmeWeb = responseGitHub.body;
               const file = fs.createWriteStream('readmeTest.md');
