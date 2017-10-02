@@ -1,8 +1,12 @@
 require('dotenv').config();
+const chaiSubset = require('chai-subset');
+require('chai').use(chaiSubset);
 const agent = require('superagent-promise')(require('superagent'), Promise);
 const { expect } = require('chai');
 const https = require('https');
 const fs = require('fs');
+const md5File = require('md5-file');
+
 
 describe('Given the exercise "Consumiendo Métodos GET"', () => {
   describe('When someone request for the user aperdomob', () => {
@@ -63,6 +67,34 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
         });
         it('Then the file must be download correctly', () => {
           expect(fs.existsSync('repo.zip')).to.be.true;
+        });
+      });
+
+      describe('And the readme file is going to check', () => {
+        let readmeWeb = {};
+        before('', (done) => {
+          agent.get(`https://api.github.com/repos/aperdomob/${repo.name}/readme`)
+            .then((responseGitHub) => {
+              readmeWeb = responseGitHub.body;
+              const file = fs.createWriteStream('readmeTest.md');
+              https.get(readmeWeb.download_url, (responseReadme) => {
+                responseReadme.pipe(file);
+                done();
+              });
+            });
+        });
+
+        it('Then the data must be the correct', () => {
+          expect(readmeWeb).to.containSubset({
+            name: 'README.md',
+            path: 'README.md',
+            sha: '9bcf2527fd5cd12ce18e457581319a349f9a56f3'
+          });
+        });
+
+        it('Then the md5 must be the correct', () => {
+          const hash = md5File.sync('readmeTest.md');
+          expect(hash).to.equal('8a406064ca4738447ec522e639f828bf');
         });
       });
     });

@@ -24,6 +24,7 @@
   "homepage": "https://github.com/Blesfia/psl-workshop-api-testing-js#readme",
   "devDependencies": {
     "chai": "^4.1.2",
+    "chai-subset": "^1.6.0",
     "eslint": "^4.7.2",
     "eslint-config-airbnb-base": "^12.0.0",
     "eslint-plugin-chai-friendly": "^0.4.0",
@@ -33,10 +34,10 @@
     "mochawesome": "^2.3.1",
     "superagent": "^3.6.0",
     "superagent-promise": "^1.1.0",
-    "travis-cli": "^1.0.9"
-  },
-  "dependencies": {
+    "travis-cli": "^1.0.9",
     "dotenv": "^4.0.0",
+    "md5-file": "^3.2.3",
     "node-zip": "^1.1.1"
-  }
+  },
+  "dependencies": {}
 }
