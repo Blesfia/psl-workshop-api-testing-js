@@ -15,9 +15,6 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
       .auth('token', process.env.ACCESS_TOKEN)
       .then((responseGitHub) => {
         response = responseGitHub.body;
-      })
-      .catch((reason) => {
-        throw new Error(reason);
       }));
 
     it('Then the name must be correct', () => {
@@ -39,9 +36,6 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
         .then((responseGitHub) => {
           response = responseGitHub.body;
           done();
-        })
-        .catch((reason) => {
-          throw new Error(reason);
         });
     });
     describe('And the repo jasmine-awesome-report is needed', () => {
@@ -85,9 +79,6 @@ describe('Given the exercise "Consumiendo Métodos GET"', () => {
             return https.get(readmeWeb.download_url, (responseReadme) => {
               responseReadme.pipe(file);
             });
-          })
-          .catch((reason) => {
-            throw new Error(reason);
           }));
 
         it('Then the data must be the correct', () => {

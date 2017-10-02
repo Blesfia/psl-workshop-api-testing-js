@@ -23,9 +23,6 @@ describe('First Api Tests', () => {
       .then((response) => {
         expect(response.status).to.equal(statusCode.OK);
         expect(response.body.args).to.eql(query);
-      })
-      .catch((reason) => {
-        throw new Error(reason);
       });
   });
 
@@ -42,9 +39,6 @@ describe('First Api Tests', () => {
       .then((response) => {
         expect(response.status).to.equal(statusCode.OK);
         expect(response.body.json).to.eql(body);
-      })
-      .catch((reason) => {
-        throw new Error(reason);
       });
   });
 
@@ -61,9 +55,6 @@ describe('First Api Tests', () => {
       .then((response) => {
         expect(response.status).to.equal(statusCode.OK);
         expect(response.body.json).to.eql(body);
-      })
-      .catch((reason) => {
-        throw new Error(reason);
       });
   });
 
@@ -80,9 +71,6 @@ describe('First Api Tests', () => {
       .then((response) => {
         expect(response.status).to.equal(statusCode.OK);
         expect(response.body.json).to.eql(body);
-      })
-      .catch((reason) => {
-        throw new Error(reason);
       });
   });
 
@@ -99,9 +87,6 @@ describe('First Api Tests', () => {
       .then((response) => {
         expect(response.status).to.equal(statusCode.OK);
         expect(response.body.json).to.eql(body);
-      })
-      .catch((reason) => {
-        throw new Error(reason);
       });
   });
 });
