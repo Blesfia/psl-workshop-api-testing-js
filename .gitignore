@@ -75,3 +75,6 @@ report
 
 
 # End of https://www.gitignore.io/api/node,code
+# Ignore test files
+readmeTest.md
+repo.zip
