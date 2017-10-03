@@ -17,21 +17,27 @@ describe('Given a DELETE tests', () => {
     },
     public: false
   };
-  it('Then a gist must be created', () => agent.post('https://api.github.com/gists', gistToCreate)
-    .auth('token', process.env.ACCESS_TOKEN).then((response) => {
-      gist = response.body;
-      expect(response.status).to.equal(statusCode.CREATED);
-      expect(gist).to.containSubset(gistToCreate);
+  let response = {};
+
+  before(() => agent.post('https://api.github.com/gists', gistToCreate)
+    .auth('token', process.env.ACCESS_TOKEN).then((responseToCreate) => {
+      gist = responseToCreate.body;
+      response = responseToCreate;
     }));
 
+  it('Then a gist must be created', () => {
+    expect(response.status).to.equal(statusCode.CREATED);
+    expect(gist).to.containSubset(gistToCreate);
+  });
+
   it('Then a gist must exist by url', () => agent.get(gist.url)
-    .auth('token', process.env.ACCESS_TOKEN).then((response) => {
-      gist = response.body;
+    .auth('token', process.env.ACCESS_TOKEN).then((responseGit) => {
+      gist = responseGit.body;
       expect(gist).to.exist;
     }));
   describe('And the gist is deleted', () => {
-    before(() => agent.del(gist.url).auth('token', process.env.ACCESS_TOKEN).then((response) => {
-      expect(response.status).to.be.equal(statusCode.NO_CONTENT);
+    before(() => agent.del(gist.url).auth('token', process.env.ACCESS_TOKEN).then((responseGit) => {
+      expect(responseGit.status).to.be.equal(statusCode.NO_CONTENT);
     }));
     it('Then a gist must not exist', () => agent.get(gist.url)
       .auth('token', process.env.ACCESS_TOKEN).catch((reason) => {
