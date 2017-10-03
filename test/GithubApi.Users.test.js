@@ -1,5 +1,6 @@
 const agent = require('superagent-promise')(require('superagent'), Promise);
 const chai = require('chai');
+const responseTime = require('superagent-response-time');
 
 const { expect } = chai;
 
@@ -20,5 +21,12 @@ describe('Given a Query parameters tests', () => {
         .auth('token', process.env.ACCESS_TOKEN).then((response) => {
           expect(response.body.length).to.be.equal(50);
         }));
+
+    it('Then the response must take less than 5 seconds', () =>
+      agent.get('https://api.github.com/users')
+        .auth('token', process.env.ACCESS_TOKEN)
+        .use(responseTime((req, time) => {
+          expect(time).to.be.lte(5000);
+        })));
   });
 });
