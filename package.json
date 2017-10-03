@@ -33,6 +33,7 @@
     "dotenv": "^4.0.0",
     "md5-file": "^3.2.3",
     "node-zip": "^1.1.1",
+    "chai-json-schema": "^1.5.0",
     "eslint-plugin-chai-friendly": "^0.4.0"
   },
   "dependencies": {
