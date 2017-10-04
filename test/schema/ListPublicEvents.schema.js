@@ -95,7 +95,10 @@ const listPublicEventsSchema = {
       },
       type: {
         id: '/items/properties/type',
-        type: 'string'
+        type: 'string',
+        enum: ['DeleteEvent', 'PushEvent', 'CreateEvent', 'IssueCommentEvent', 'WatchEvent',
+          'PullRequestEvent', 'PullRequestReviewCommentEvent', 'IssuesEvent', 'ForkEvent',
+          'MemberEvent', 'GollumEvent']
       }
     },
     type: 'object'
